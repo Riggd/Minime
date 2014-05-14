@@ -14,48 +14,49 @@ def minime_css(filename):
     original_css = css_file.read()    
     time.sleep(1)
     
+    print 'Removing Comments'
+    converted_css = original_css    
+    converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all multi-line comments (/* COMMENT */)
+    time.sleep(1)
+    
     print 'Removing Linebreaks'
-    converted_css = original_css.replace('\n','')    
+    converted_css = converted_css.replace('\n','')    
     time.sleep(1)
     
     print 'Removing Tabs'
     converted_css = converted_css.replace('\t','')
     converted_css = converted_css.replace('    ','')    
-    time.sleep(1)
-
-    print 'Removing Comments'
-    converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all occurance streamed comments (/*COMMENT */) from string
-    time.sleep(1)
+    time.sleep(1)    
     
     mini_file = open(filename + '.min.css', 'w')
     mini_file.write(converted_css)
     print 'MiniMe file created'
 
-'''
 def minime_js(filename):
     print 'Reading File'
     js_file = open(filename + '.js', 'r+')
     original_js = js_file.read()    
     time.sleep(1)
+
+    print 'Removing Comments'
+    converted_js = original_js
+    converted_js = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_js) # remove all multi-line comments (/* COMMENT */)
+    converted_js = re.sub(re.compile("//.*?\n" ) ,"" ,converted_js) # remove all single-line comments (//COMMENT)
+    time.sleep(1)
     
     print 'Removing Linebreaks'
-    converted_js = original_js.replace('\n','')    
+    converted_js = converted_js.replace('\n','')    
     time.sleep(1)
     
     print 'Removing Tabs'
     converted_js = converted_js.replace('\t','')
-    converted_js = converted_js.replace('    ','')    
-    time.sleep(1)
-
-    print 'Removing Comments'
-    converted_js = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_js) # remove all multi-line comments (/*COMMENT */)
-    converted_js = re.sub(re.compile("//.*?\n" ) ,"" ,converted_js) # remove all single-line comments (//COMMENT)
+    converted_js = converted_js.replace('    ','') 
+    converted_js = converted_js.replace('  ','')     
     time.sleep(1)
     
     mini_file = open(filename + '.min.js', 'w')
     mini_file.write(converted_js)
     print 'MiniMe file created'
-'''
     
 file_type = raw_input('Please enter (1) for CSS file or (2) for Javascript file: ')
 
@@ -66,7 +67,7 @@ while True:
         break
     elif file_type == '2':
         filename = raw_input('Enter the name of the file without the extension: ')
-        #minime_js(filename)
+        minime_js(filename)
         break
     else:
         file_type = raw_input('Please enter (1) for CSS file or (2) for Javascript file: ')
