@@ -32,6 +32,7 @@ def minime_css(filename):
     print 'Removing Comments'
     converted_css = original_css    
     converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all multi-line comments (/* COMMENT */)
+    converted_css = re.sub(re.compile("/:(.)/", re.DOTALL) ,"" ,converted_css) # remove all space after (:) 
     time.sleep(1)
     
     print 'Removing Linebreaks'
