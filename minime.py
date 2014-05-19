@@ -32,16 +32,20 @@ def minime_css(filename):
     print 'Removing Comments'
     converted_css = original_css    
     converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all multi-line comments (/* COMMENT */)
-    converted_css = re.sub(re.compile("/:(.)/", re.DOTALL) ,"" ,converted_css) # remove all space after (:) 
+    
     time.sleep(1)
     
     print 'Removing Linebreaks'
     converted_css = converted_css.replace('\n','')    
     time.sleep(1)
     
-    print 'Removing Tabs'
+    print 'Removing Tabs and Spaces'
     converted_css = converted_css.replace('\t','')
-    converted_css = converted_css.replace('    ','')    
+    converted_css = converted_css.replace('  ','')  
+    converted_css = converted_css.replace('   ','')  
+    converted_css = converted_css.replace('    ','') 
+    converted_css = re.sub(re.compile("(:\s)", re.DOTALL) ,":" ,converted_css) # remove all space after (:) 
+    converted_css = re.sub(re.compile("(,\s)", re.DOTALL) ,":" ,converted_css) # remove all space after (,) 
     time.sleep(1)    
     '''
     print 'Finding key words and removing correct spaces'
