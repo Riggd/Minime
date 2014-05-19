@@ -39,13 +39,16 @@ def minime_css(filename):
     converted_css = converted_css.replace('\n','')    
     time.sleep(1)
     
-    print 'Removing Tabs and Spaces'
+    print 'Removing Tabs'
     converted_css = converted_css.replace('\t','')
     converted_css = converted_css.replace('  ','')  
     converted_css = converted_css.replace('   ','')  
     converted_css = converted_css.replace('    ','') 
+    time.sleep(1)
+    
+    print 'Removing Spaces'
     converted_css = re.sub(re.compile("(:\s)", re.DOTALL) ,":" ,converted_css) # remove all space after (:) 
-    converted_css = re.sub(re.compile("(,\s)", re.DOTALL) ,":" ,converted_css) # remove all space after (,) 
+    converted_css = re.sub(re.compile("(,\s)", re.DOTALL) ,"," ,converted_css) # remove all space after (,) 
     time.sleep(1)    
     '''
     print 'Finding key words and removing correct spaces'
@@ -58,7 +61,11 @@ def minime_css(filename):
     print 'MiniMe file created'
     
     
+'''
+Create a dictionary of all mathematical operators
 
+" +  -  !=  ==  ===  =  ?  etc. "
+'''
 def minime_js(filename):
     print 'Reading File'
     js_file = open(filename + '.js', 'r+')
@@ -68,7 +75,7 @@ def minime_js(filename):
     print 'Removing Comments'
     converted_js = original_js
     converted_js = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_js) # remove all multi-line comments (/* COMMENT */)
-    converted_js = re.sub(re.compile("//.*?\n" ) ,"" ,converted_js) # remove all single-line comments (//COMMENT)
+    converted_js = re.sub(re.compile("(?<!\")\/\/.+?\n"),"" ,converted_js) # remove all single-line comments (//COMMENT) expect in quotes   
     time.sleep(1)
     
     print 'Removing Linebreaks'
@@ -78,7 +85,26 @@ def minime_js(filename):
     print 'Removing Tabs'
     converted_js = converted_js.replace('\t','')
     converted_js = converted_js.replace('    ','') 
-    converted_js = converted_js.replace('  ','')     
+    converted_js = converted_js.replace('  ','')
+    time.sleep(1)
+    
+    print 'Removing Spaces'
+    converted_js = re.sub(re.compile("\s=\s"),"=" ,converted_js) # remove all spaces before and after (=)
+    converted_js = re.sub(re.compile("\s==\s"),"==" ,converted_js) # remove all spaces before and after (==)
+    converted_js = re.sub(re.compile("\s===\s"),"==" ,converted_js) # remove all spaces before and after (===) and replace with (==)
+    converted_js = re.sub(re.compile("\s\+\s"),"+" ,converted_js) # remove all spaces before and after (+)
+    converted_js = re.sub(re.compile("\)\s"),")" ,converted_js) # remove all spaces after ())
+    converted_js = re.sub(re.compile("\s\)"),")" ,converted_js) # remove all spaces before ())
+    converted_js = re.sub(re.compile("(\(\s)"),"(" ,converted_js) # remove all spaces after ())
+    converted_js = re.sub(re.compile("\s\("),"(" ,converted_js) # remove all spaces before ())
+    converted_js = re.sub(re.compile("\s{\s"),"{" ,converted_js) # remove all spaces after ())
+    converted_js = re.sub(re.compile("\?\s"),"?" ,converted_js) # remove all spaces after (?)
+    converted_js = re.sub(re.compile("\s\?"),"?" ,converted_js) # remove all spaces before (?)
+    converted_js = re.sub(re.compile(",\s", re.DOTALL) ,"," ,converted_js) # remove all space after (,) 
+    converted_js = re.sub(re.compile(":\s", re.DOTALL) ,":" ,converted_js) # remove all space after (:) |
+    converted_js = re.sub(re.compile("\s&&\s", re.DOTALL) ,"&&" ,converted_js) # remove all space after (&&)
+    converted_js = re.sub(re.compile("\s!=\s", re.DOTALL) ,"!=" ,converted_js) # remove all space after (!=)
+    converted_js = re.sub(re.compile("\s\|\|\s", re.DOTALL) ,"||" ,converted_js) # remove all space after (||)
     time.sleep(1)
     
     mini_file = open(filename + '.min.js', 'w')
