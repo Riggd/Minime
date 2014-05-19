@@ -32,7 +32,6 @@ def minime_css(filename):
     print 'Removing Comments'
     converted_css = original_css    
     converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all multi-line comments (/* COMMENT */)
-    
     time.sleep(1)
     
     print 'Removing Linebreaks'
@@ -47,12 +46,13 @@ def minime_css(filename):
     time.sleep(1)
     
     print 'Removing Spaces'
-    converted_css = re.sub(re.compile(":\s", re.DOTALL) ,":" ,converted_css) # remove all space after (:)
-    converted_css = re.sub(re.compile(";\s", re.DOTALL) ,";" ,converted_css) # remove all space after (;)
-    converted_css = re.sub(re.compile(",\s", re.DOTALL) ,"," ,converted_css) # remove all space after (,)
-    converted_css = re.sub(re.compile("{\s", re.DOTALL) ,"{" ,converted_css) # remove all space after ({)
-    converted_css = re.sub(re.compile("\s{", re.DOTALL) ,"{" ,converted_css) # remove all space before ({)
-    converted_css = re.sub(re.compile("}\s", re.DOTALL) ,"}" ,converted_css) # remove all space after (})
+    converted_css = re.sub(re.compile(":\s", re.DOTALL) , ":" ,converted_css) # remove all space after (:)
+    converted_css = re.sub(re.compile(";\s", re.DOTALL) , ";" ,converted_css) # remove all space after (;)
+    converted_css = re.sub(re.compile(",\s", re.DOTALL) , "," ,converted_css) # remove all space after (,)
+    converted_css = re.sub(re.compile("{\s", re.DOTALL) , "{" ,converted_css) # remove all space after ({)
+    converted_css = re.sub(re.compile("\s{", re.DOTALL) , "{" ,converted_css) # remove all space before ({)
+    converted_css = re.sub(re.compile("}\s", re.DOTALL) , "}" ,converted_css) # remove all space after (})
+    converted_css = re.sub(re.compile(";}", re.DOTALL) , "}" ,converted_css) # remove all last semicolons (;})
     time.sleep(1)    
     '''
     print 'Finding key words and removing correct spaces'
@@ -63,7 +63,49 @@ def minime_css(filename):
     mini_file = open(filename + '.min.css', 'w')
     mini_file.write(converted_css)
     print 'MiniMe file created'
+ 
+def minime_css_dict(filename):
+    print 'Reading File'
+    css_file = open(filename + '.css', 'r+')
+    original_css = css_file.read()    
+    time.sleep(1)
     
+    print 'Removing Comments'
+    converted_css = original_css    
+    converted_css = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,converted_css) # remove all multi-line comments (/* COMMENT */)
+    time.sleep(1)
+    
+    print 'Removing Linebreaks'
+    converted_css = converted_css.replace('\n','')    
+    time.sleep(1)
+    
+    print 'Removing Tabs'
+    converted_css = converted_css.replace('\t','')
+    converted_css = converted_css.replace('  ','')  
+    converted_css = converted_css.replace('   ','')  
+    converted_css = converted_css.replace('    ','') 
+    time.sleep(1)
+    
+    print 'Removing Spaces'
+    css_syntax = {'{','}',',',':',';'}
+    #for syntax in css_syntax:
+        #converted_css = re.sub(re.compile("%s\s", re.DOTALL) % syntax , syntax , converted_css)
+        
+    for syntax in css_syntax:
+        converted_css = re.sub(re.compile("\s".join(syntax), re.DOTALL), syntax , converted_css)
+    
+    converted_css = re.sub(re.compile(";}", re.DOTALL) , "}" ,converted_css) # remove all last semicolons (;})
+    time.sleep(1)
+    
+    '''
+    print 'Finding key words and removing correct spaces'
+    keywords = []
+    converted_css.find('transition', 'margin', 'padding'
+    
+    '''
+    mini_file = open(filename + '.min.css', 'w')
+    mini_file.write(converted_css)
+    print 'MiniMe file created' 
     
 '''
 Create a dictionary of all mathematical operators
@@ -120,7 +162,8 @@ file_type = raw_input('Please enter (1) for CSS file or (2) for Javascript file:
 while True:
     if file_type == '1':
         filename = raw_input('Enter the name of the file without the extension: ')
-        minime_css(filename)
+        #minime_css(filename)
+        minime_css_dict(filename)
         break
     elif file_type == '2':
         filename = raw_input('Enter the name of the file without the extension: ')
