@@ -47,8 +47,12 @@ def minime_css(filename):
     time.sleep(1)
     
     print 'Removing Spaces'
-    converted_css = re.sub(re.compile("(:\s)", re.DOTALL) ,":" ,converted_css) # remove all space after (:) 
-    converted_css = re.sub(re.compile("(,\s)", re.DOTALL) ,"," ,converted_css) # remove all space after (,) 
+    converted_css = re.sub(re.compile(":\s", re.DOTALL) ,":" ,converted_css) # remove all space after (:)
+    converted_css = re.sub(re.compile(";\s", re.DOTALL) ,";" ,converted_css) # remove all space after (;)
+    converted_css = re.sub(re.compile(",\s", re.DOTALL) ,"," ,converted_css) # remove all space after (,)
+    converted_css = re.sub(re.compile("{\s", re.DOTALL) ,"{" ,converted_css) # remove all space after ({)
+    converted_css = re.sub(re.compile("\s{", re.DOTALL) ,"{" ,converted_css) # remove all space before ({)
+    converted_css = re.sub(re.compile("}\s", re.DOTALL) ,"}" ,converted_css) # remove all space after (})
     time.sleep(1)    
     '''
     print 'Finding key words and removing correct spaces'
@@ -97,7 +101,7 @@ def minime_js(filename):
     converted_js = re.sub(re.compile("\s\)"),")" ,converted_js) # remove all spaces before ())
     converted_js = re.sub(re.compile("(\(\s)"),"(" ,converted_js) # remove all spaces after ())
     converted_js = re.sub(re.compile("\s\("),"(" ,converted_js) # remove all spaces before ())
-    converted_js = re.sub(re.compile("\s{\s"),"{" ,converted_js) # remove all spaces after ())
+    converted_js = re.sub(re.compile("\s{\s"),"{" ,converted_js) # remove all spaces after ({)
     converted_js = re.sub(re.compile("\?\s"),"?" ,converted_js) # remove all spaces after (?)
     converted_js = re.sub(re.compile("\s\?"),"?" ,converted_js) # remove all spaces before (?)
     converted_js = re.sub(re.compile(",\s", re.DOTALL) ,"," ,converted_js) # remove all space after (,) 
