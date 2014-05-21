@@ -109,6 +109,7 @@ def minime_css_dict(filename):
     
 '''
 Create a dictionary of all mathematical operators
+traverse list and substitute spaces
 
 " +  -  !=  ==  ===  =  ?  etc. "
 '''
@@ -162,8 +163,8 @@ file_type = raw_input('Please enter (1) for CSS file or (2) for Javascript file:
 while True:
     if file_type == '1':
         filename = raw_input('Enter the name of the file without the extension: ')
-        #minime_css(filename)
-        minime_css_dict(filename)
+        minime_css(filename)
+        #minime_css_dict(filename)
         break
     elif file_type == '2':
         filename = raw_input('Enter the name of the file without the extension: ')
